@@ -8,7 +8,9 @@ defmodule Issues.Cli do
   """
 
   def main(argv) do
-    argv |> parse_args |> process
+    argv
+    |> parse_args
+    |> process
   end
 
   @doc """
@@ -20,7 +22,15 @@ defmodule Issues.Cli do
   Return a tuple of `{user, project, count}`, or `:help` if help was given.
   """
   def parse_args(argv) do
-    parse = OptionParser.parse(argv, switches: [help: :boolean], aliases: [h: :help])
+    parse = OptionParser.parse(
+      argv,
+      switches: [
+        help: :boolean
+      ],
+      aliases: [
+        h: :help
+      ]
+    )
 
     case parse do
       {[help: true], _, _} -> :help
@@ -31,16 +41,20 @@ defmodule Issues.Cli do
   end
 
   def process(:help) do
-    IO.puts("""
-    usage: issues <user> <project> [ count | #{@default_count} ]
-    """)
+    IO.puts(
+      """
+      usage: issues <user> <project> [ count | #{@default_count} ]
+      """
+    )
 
     System.halt(0)
   end
 
   def process({user, project, count}) do
-    IO.puts("""
-    process user:#{user} project:#{project} count:#{count}
-    """)
+    IO.puts(
+      """
+      process user:#{user} project:#{project} count:#{count}
+      """
+    )
   end
 end
